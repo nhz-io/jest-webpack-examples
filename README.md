@@ -11,7 +11,7 @@
 
 ## Problems with ES6 imports
 
-Consider the case:
+### Consider the case:
 
 File `a.es6`
 ```javascript
@@ -29,15 +29,15 @@ File `c.es6`
 import B from './b.es6';
 export default class C extends B {};
 ```
-
+### This will break:
 File `__tests__/c.es6`
 ```javascript
 jest.dontMock('../c.es6');
 const C = require('../c.es6').default; //import C from '../c.es6' will not work
 ```
 
-Will break the test. Jest cant mock ES6 exports, so the solution is either to `jest.dontMock()`  
-each of the involved imports (recursively) or create custom `__mocks__` per each file.
+Jest can't mock ES6 exports, so the solution is either to `jest.dontMock()`  
+each of the involved imports (recursively) or create custom `__mocks__` per each file.  
 
 ### This will work: 
 File `__tests__/c.es6`
