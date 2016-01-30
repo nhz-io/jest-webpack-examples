@@ -1,4 +1,4 @@
-# jest-webpack-examples
+# Jest Webpack Examples
 
 [![Build Status][travis-image]][travis-url]
 [![Coverage][coverage-image]][coverage-url]
