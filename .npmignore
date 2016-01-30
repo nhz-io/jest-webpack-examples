@@ -1,0 +1,13 @@
+node_modules
+.gitignore
+.npmignore
+.travis.yml
+.eslintrc
+*.log
+build
+examples
+__tests__
+__mocks__
+webpack.config.babel.js
+preprocessor.js
+coverage
