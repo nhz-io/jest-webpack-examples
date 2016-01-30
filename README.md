@@ -67,6 +67,51 @@ jest.dontMock('../c.es6');
 const C = require('../c.es6').default;
 ```
 
+## Problems with coverage
+`jest --coverage` will miss sources unless the tests explicitly dontMock() them and use the ES6 import workaround.
+
+## This will pass the test but miss coverage:
+File `a.es6`
+```javascript
+export default 'test';
+```
+
+File `__mocks__/a.es6`
+```javascript
+jest.dontMock('../a.es6')
+module.exports = require('../a.es6').default;
+```
+
+File `__tests__/a.es6`
+```javascript
+import a from '../a.es6';
+describe('a', function() {
+  it('should be equal to "test"', function() {
+    expect(a).toBe('test');
+  });
+});
+```
+
+The `import` will work because of the custom mock but coverage will be missing
+
+## This will pass the test and will be covered:
+
+File `a.es6`
+```javascript
+export default 'test';
+```
+
+File `__tests__/a.es6`
+```javascript
+jest.dontMock('../a.es6');
+const a = require('../a.es6').default;
+describe('a', function() {
+  it('should be equal to "test"', function() {
+    expect(a).toBe('test');
+  });
+});
+```
+
 ## Test
 ```
 git clone https://github.com/nhz-io/jest-webpack-examples.git
