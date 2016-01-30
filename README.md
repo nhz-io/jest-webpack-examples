@@ -21,7 +21,7 @@ npm test
 
 ### [MIT](LICENSE)
 
-## VERSION]
+## VERSION
 
 ### 1.0.0
 
