@@ -113,6 +113,44 @@ describe('a', function() {
 });
 ```
 
+## Problems with aliases
+
+Aliases that resolve to files work perfectly, however, when alias refers to directory it will not be resolved.
+
+### Webpack will bundle this fine but jest will not be able to resolve the alias:
+
+File `webpack.config.babel.js`
+```javascript
+import path from 'path';
+const ROOT_PATH = path.resolve(__dirname);
+...
+resolve: {
+  alias: {
+    lib: path.resolve(ROOT_PATH, 'lib'),
+  }
+}
+...
+```
+
+File `lib/a.es6`
+```javascript
+export default class A {}
+```
+
+File `b.es6`
+```javascript
+import A from 'lib/a.es6';
+export default class B extends A {};
+```
+
+File `__tests__/b.es6`
+```javascript
+jest.dontMock('../b.es6');
+const B = require('../b.es6').default;
+```
+
+The test will break with `Error: Cannot find module '.../lib' from '.../b.es6'`
+
 ## Test
 ```
 git clone https://github.com/nhz-io/jest-webpack-examples.git
