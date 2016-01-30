@@ -9,6 +9,45 @@
 * [Non-Javascript dependencies example](examples/non-js-deps)
 * [JSX Example](examples/jsx)
 
+## Problems with ES6 imports
+
+Consider the case:
+
+File `a.es6`
+```javascript
+export default class A {};
+```
+
+File `b.es6`
+```javascript
+import A from './a.es6';
+export default class B extends A {};
+```
+
+File `c.es6`
+```javascript
+import B from './b.es6';
+export default class C extends B {};
+```
+
+File `__tests__/c.es6`
+```javascript
+jest.dontMock('../c.es6');
+const C = require('../c.es6').default; //import C from '../c.es6' will not work
+```
+
+Will break the test. Jest cant mock ES6 exports, so the solution is either to `jest.dontMock()`  
+each of the involved imports (recursively) or create custom `__mocks__` per each file.
+
+### This will work: 
+File `__tests__/c.es6`
+```javascript
+jest.dontMock('../c.es6');
+jest.dontMock('../b.es6');
+jest.dontMock('../a.es6');
+const C = require('../c.es6').default;
+```
+
 ## Test
 ```
 git clone https://github.com/nhz-io/jest-webpack-examples.git
