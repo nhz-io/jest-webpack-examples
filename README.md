@@ -68,9 +68,10 @@ const C = require('../c.es6').default;
 ```
 
 ## Problems with coverage
+
 `jest --coverage` will miss sources unless the tests explicitly dontMock() them and use the ES6 import workaround.
 
-## This will pass the test but miss coverage:
+### This will pass the test but miss coverage:
 File `a.es6`
 ```javascript
 export default 'test';
@@ -94,7 +95,7 @@ describe('a', function() {
 
 The `import` will work because of the custom mock but coverage will be missing
 
-## This will pass the test and will be covered:
+### This will pass the test and will be covered:
 
 File `a.es6`
 ```javascript
