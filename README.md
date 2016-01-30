@@ -48,6 +48,25 @@ jest.dontMock('../a.es6');
 const C = require('../c.es6').default;
 ```
 
+### This will also work:
+File `__mocks__/a.es6`
+```javascript
+jest.dontMock('../a.es6');
+module.exports = require('../a.es6').default;
+```
+
+File `__mocks__/b.es6`
+```javascript
+jest.dontMock('../b.es6');
+module.exports = require('../b.es6').default;
+```
+
+File `__tests__/c.es6`
+```javascript
+jest.dontMock('../c.es6');
+const C = require('../c.es6').default;
+```
+
 ## Test
 ```
 git clone https://github.com/nhz-io/jest-webpack-examples.git
